@@ -1,0 +1,11 @@
+services:
+  naming-server:
+    build: naming-server
+    image: naming-server
+    ports:
+      - "8761:8761"
+    networks:
+      - subscription-network
+
+networks:
+  subscription-network:
