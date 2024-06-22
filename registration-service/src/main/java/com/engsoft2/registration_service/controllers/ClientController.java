@@ -22,5 +22,4 @@ public class ClientController {
 	public List<ClientDTO> getClients() {
 		return clientService.getClients();
 	}
-
 }
