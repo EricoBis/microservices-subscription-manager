@@ -26,4 +26,8 @@ public class Application {
 	public Double getCost() {
 		return cost;
 	}
+
+	public List<Subscription> getSubscriptions() {
+		return subscriptions;
+	}
 }
