@@ -8,7 +8,7 @@ import com.engsoft2.registration_service.entities.Application;
 import com.engsoft2.registration_service.repositories.SubscriptionRepository;
 import com.engsoft2.registration_service.repositories.ClientRepository;
 import com.engsoft2.registration_service.repositories.ApplicationRepository;
-import com.engsoft2.registration_service.dtos.SubscriptionDTO;
+import com.engsoft2.registration_service.services.dto.SubscriptionDTO;
 
 import java.util.Date;
 import java.util.List;

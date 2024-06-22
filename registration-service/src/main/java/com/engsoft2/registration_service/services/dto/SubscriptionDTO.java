@@ -1,4 +1,4 @@
-package com.engsoft2.registration_service.dtos;
+package com.engsoft2.registration_service.services.dto;
 
 import java.util.Date;
 
