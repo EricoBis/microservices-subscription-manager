@@ -6,6 +6,16 @@ services:
       - "8761:8761"
     networks:
       - subscription-network
+  registration-postgres:
+    image: postgres:16-alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=registration
+      - POSTGRES_USER=registration
+      - POSTGRES_DB=registration
+    networks:
+      - subscription-network
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmq
