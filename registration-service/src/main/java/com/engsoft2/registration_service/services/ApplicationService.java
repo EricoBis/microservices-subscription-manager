@@ -11,6 +11,7 @@ import java.util.List;
 @Service
 public class ApplicationService {
 
+	@Autowired
 	private ApplicationRepository applicationRepository;
 
 	@Autowired
@@ -22,4 +23,10 @@ public class ApplicationService {
 		return applicationRepository.findAll().stream().map(app -> new ApplicationDTO(app.getAppId(), app.getName(), app.getCost())).toList();
 	}
 
+    public ApplicationDTO updateApplicationCost(Long id, Double cost) {
+        Application application = applicationRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Application not found"));
+        application.setCost(cost);
+        applicationRepository.save(application);
+        return new ApplicationDTO(application.getAppId(), application.getName(), application.getCost());
+    }
 }

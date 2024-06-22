@@ -27,5 +27,4 @@ public class ApplicationController {
     public ApplicationDTO updateApplicationCost(@PathVariable Long idAplicativo, @RequestBody ApplicationDTO applicationDTO) {
         return applicationService.updateApplicationCost(idAplicativo, applicationDTO.getCost());
     }
-
 }
