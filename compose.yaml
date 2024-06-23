@@ -3,7 +3,7 @@ services:
     build: naming-server
     image: naming-server
     ports:
-      - "8761:8761"
+      - 8761:8761
     networks:
       - subscription-network
   registration-postgres:
@@ -16,12 +16,33 @@ services:
       - POSTGRES_DB=registration
     networks:
       - subscription-network
+  registration-service:
+    build: registration-service
+    image: registration-service
+    ports:
+      - 9001:9001
+    environment:
+      - eureka.client.serviceUrl.defaultZone = http://naming-server:8761/eureka
+      - spring.datasource.url = jdbc:postgresql://registration-postgres:5432/registration
+      - spring.rabbitmq.host=rabbitmq
+      - spring.rabbitmq.port=5672
+      - spring.rabbitmq.username=engsoft2
+      - spring.rabbitmq.password=engsoft2
+    networks:
+      - subscription-network
+    depends_on:
+      - naming-server
+      - registration-postgres
+      - rabbitmq
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmq
     ports:
       - 5672:5672
       - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=engsoft2
+      - RABBITMQ_DEFAULT_PASS=engsoft2
     volumes:
       - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
