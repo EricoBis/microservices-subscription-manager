@@ -11,14 +11,17 @@ import java.util.List;
 @Service
 public class ApplicationService {
 
-	@Autowired
-	private ApplicationRepository applicationRepository;
+	private final ApplicationRepository applicationRepository;
 
 	@Autowired
 	public ApplicationService(ApplicationRepository applicationRepository) {
 		this.applicationRepository = applicationRepository;
 	}
 
+	/**
+	 * Get applications from database
+	 * @return A list of applications
+	 */
 	public List<ApplicationDTO> getApplications() {
 		return applicationRepository.findAll().stream().map(app -> new ApplicationDTO(app.getAppId(), app.getName(), app.getCost())).toList();
 	}

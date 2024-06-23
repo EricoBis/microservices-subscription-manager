@@ -11,13 +11,17 @@ import java.util.List;
 @RestController
 public class ClientController {
 
-	private ClientService clientService;
+	private final ClientService clientService;
 
 	@Autowired
 	public ClientController(ClientService clientService) {
 		this.clientService = clientService;
 	}
 
+	/**
+	 * Get clients from database
+	 * @return A list of clients
+	 */
 	@GetMapping("/clientes")
 	public List<ClientDTO> getClients() {
 		return clientService.getClients();

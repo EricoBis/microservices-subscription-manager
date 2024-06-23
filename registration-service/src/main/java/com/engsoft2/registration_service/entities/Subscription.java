@@ -1,6 +1,8 @@
 package com.engsoft2.registration_service.entities;
 
 import jakarta.persistence.*;
+
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -17,10 +19,22 @@ public class Subscription {
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
-
+    @Temporal(TemporalType.DATE)
     private Date beginSubscription;
+    @Temporal(TemporalType.DATE)
     private Date endSubscription;
-    private String status;
+//    private String status;
+
+    public Subscription(Application application, Client client, Date beginSubscription, Date endSubscription) {
+        this.application = application;
+        this.client = client;
+        this.beginSubscription = beginSubscription;
+        this.endSubscription = endSubscription;
+    }
+
+    public Subscription() {
+
+    }
 
     public Long getSubscriptionId() {
         return subscriptionId;
@@ -62,11 +76,9 @@ public class Subscription {
         this.endSubscription = endSubscription;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public SubscriptionStatus getStatus() {
+        if (Calendar.getInstance().getTime().before(endSubscription))
+            return SubscriptionStatus.ATIVA;
+        return SubscriptionStatus.CANCELADA;
     }
 }

@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/servcad")
 public class SubscriptionController {
 
-    private SubscriptionService subscriptionService;
+    private final SubscriptionService subscriptionService;
 
     @Autowired
     public SubscriptionController(SubscriptionService subscriptionService) {
@@ -35,7 +34,7 @@ public class SubscriptionController {
 
     @PostMapping("/assinaturas")
     public SubscriptionDTO createSubscription(@RequestBody SubscriptionDTO subscriptionDTO) {
-        return subscriptionService.createSubscription(subscriptionDTO.getClientId(), subscriptionDTO.getAppId());
+        return subscriptionService.createSubscription(subscriptionDTO.clientId(), subscriptionDTO.appId());
     }
 
 }

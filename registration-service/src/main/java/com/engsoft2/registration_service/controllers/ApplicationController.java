@@ -8,16 +8,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/servcad")
 public class ApplicationController {
 
-    private ApplicationService applicationService;
+    private final ApplicationService applicationService;
 
     @Autowired
     public ApplicationController(ApplicationService applicationService) {
         this.applicationService = applicationService;
     }
 
+    /**
+     * Get applications from database
+     * @return A list of applications
+     */
     @GetMapping("/aplicativos")
     public List<ApplicationDTO> getApplications() {
         return applicationService.getApplications();
@@ -25,6 +28,6 @@ public class ApplicationController {
 
     @PatchMapping("/aplicativos/{idAplicativo}")
     public ApplicationDTO updateApplicationCost(@PathVariable Long idAplicativo, @RequestBody ApplicationDTO applicationDTO) {
-        return applicationService.updateApplicationCost(idAplicativo, applicationDTO.getCost());
+        return applicationService.updateApplicationCost(idAplicativo, applicationDTO.cost());
     }
 }
