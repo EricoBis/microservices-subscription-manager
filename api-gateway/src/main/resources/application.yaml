@@ -1,0 +1,68 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          lower-case-service-id: true
+      routes:
+        - id: list-clients
+          uri: lb://registration-service
+          predicates:
+            - Path=/servcad/clientes
+          filters:
+            - RewritePath=/servcad/clientes, /clientes
+        - id: list-apps
+          uri: lb://registration-service
+          predicates:
+            - Path=/servcad/aplicativos
+          filters:
+            - RewritePath=/servcad/aplicativos, /aplicativos
+        - id: create-subscription
+          uri: lb://registration-service
+          predicates:
+            - Path=/servcad/assinaturas
+          filters:
+            - RewritePath=/servcad/assinaturas, /assinaturas
+        - id: change-app-price
+          uri: lb://registration-service
+          predicates:
+            - Path=/servcad/aplicativos/**
+          filters:
+            - RewritePath=/servcad/aplicativos/?(?<idapp>.*), /aplicativos/$\{idapp}
+        - id: get-subscriptions-by-type
+          uri: lb://registration-service
+          predicates:
+            - Path=/servcad/assinaturas/**
+          filters:
+            - RewritePath=/servcad/assinaturas/?(?<type>.*), /assinaturas/$\{type}
+        - id: get-client-subscriptions
+          uri: lb://registration-service
+          predicates:
+            - Path=/servcad/asscli/**
+          filters:
+            - RewritePath=/servcad/asscli/?(?<clientid>.*), /asscli/$\{clientid}
+        - id: get-app-subscriptions
+          uri: lb://registration-service
+          predicates:
+            - Path=/servcad/assapp/**
+          filters:
+            - RewritePath=/servcad/assapp/?(?<appid>.*), /assapp/$\{appid}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    gateway:
+      enabled: true
