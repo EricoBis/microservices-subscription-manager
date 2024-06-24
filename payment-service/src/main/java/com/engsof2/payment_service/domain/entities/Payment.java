@@ -19,8 +19,7 @@ public class Payment {
 
     private Long codAssinatura;
 
-    private double valorPago;
-
+    private Double valorPago;
 
     @Temporal(TemporalType.DATE)
     private Date dataPagamento;
