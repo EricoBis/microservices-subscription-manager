@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: payment-service
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/registration
+    username: payment
+    password: payment
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: engsoft2
+    password: engsoft2
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
