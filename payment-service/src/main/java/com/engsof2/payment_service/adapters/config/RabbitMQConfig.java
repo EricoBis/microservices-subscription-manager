@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     public static final String QUEUE_REGISTER = "subscription.v1.payment-register";
-    public static final String QUEUE_VALIDATE = "subscription.v1.payment-validate";
+    public static final String FANOUT_VALIDATION = "subscription.v1.payment-validate";
 
     @Bean
     public Queue queueRegister() {
@@ -20,8 +20,8 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Queue queueValida() {
-        return new Queue(QUEUE_VALIDATE, true);
+    public FanoutExchange queueValida() {
+        return new FanoutExchange(FANOUT_VALIDATION);
     }
 
     @Bean

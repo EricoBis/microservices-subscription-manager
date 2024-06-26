@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Calendar;
+import java.util.Optional;
 
 @Component
 public class PaymentRegisterEvent {
@@ -25,7 +26,12 @@ public class PaymentRegisterEvent {
 	@RabbitListener(queues = QUEUENAME)
 	public void receive(PaymentDTO payment) {
 
-		Subscription subscription = subscriptionRepository.findById(payment.codass()).orElseThrow();
+		Optional<Subscription> subscriptionOptional = subscriptionRepository.findById(payment.codass());
+
+		if (subscriptionOptional.isEmpty())
+			return;
+
+		Subscription subscription = subscriptionOptional.get();
 
 		int months = (int)Math.round(payment.paidValue() / subscription.getApplication().getCost());
 

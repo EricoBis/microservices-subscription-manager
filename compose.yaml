@@ -63,7 +63,7 @@ services:
       - 9002:9002
     environment:
       - eureka.client.serviceUrl.defaultZone = http://naming-server:8761/eureka
-      - spring.datasource.url = jdbc:postgresql://payment-postgress:5434/payment
+      - spring.datasource.url = jdbc:postgresql://payment-postgres:5432/payment
       - spring.rabbitmq.host=rabbitmq
       - spring.rabbitmq.port=5672
       - spring.rabbitmq.username=engsoft2
