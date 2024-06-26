@@ -11,18 +11,14 @@ import org.springframework.stereotype.Service;
 public class PaymentProducer {
 
     private final RabbitTemplate rabbitTemplate;
-//    private final String queueRegister;
-//    private final String queueValidate;
 
     @Autowired
     public PaymentProducer(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
-//        this.queueRegister = queueRegister;
-//        this.queueValidate = queueValidate;
     }
 
     public void sendPaymentMessage(PaymentDTO payment) {
         rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_REGISTER, payment);
-//        rabbitTemplate.convertAndSend(queueValidate, payment);
+        rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_VALIDATION, payment);
     }
 }

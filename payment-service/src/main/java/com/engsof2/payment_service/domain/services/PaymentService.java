@@ -7,6 +7,7 @@ import com.engsof2.payment_service.domain.entities.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 
 @Service
@@ -25,7 +26,7 @@ public class PaymentService {
         var payment = Payment.builder()
                 .codAssinatura(paymentDTO.codass())
                 .valorPago(paymentDTO.paidValue())
-                .dataPagamento(new Date(paymentDTO.year(), paymentDTO.month(), paymentDTO.day()))
+                .dataPagamento(new Date(paymentDTO.year() - 1900, paymentDTO.month() - 1, paymentDTO.day()))
                 .build();
         paymentRepository.save(payment);
         paymentProducer.sendPaymentMessage(paymentDTO);

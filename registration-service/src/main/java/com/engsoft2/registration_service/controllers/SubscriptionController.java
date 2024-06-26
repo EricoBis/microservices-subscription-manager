@@ -3,6 +3,8 @@ package com.engsoft2.registration_service.controllers;
 import com.engsoft2.registration_service.services.SubscriptionService;
 import com.engsoft2.registration_service.services.dto.SubscriptionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,6 +37,15 @@ public class SubscriptionController {
     @PostMapping("/assinaturas")
     public SubscriptionDTO createSubscription(@RequestBody SubscriptionDTO subscriptionDTO) {
         return subscriptionService.createSubscription(subscriptionDTO.clientId(), subscriptionDTO.appId());
+    }
+
+    @GetMapping("/assinatura/{codass}")
+    public ResponseEntity<SubscriptionDTO> getSubscriptionById(@PathVariable Long codass) {
+        try {
+            return new ResponseEntity<>(subscriptionService.getSubscription(codass), HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 }

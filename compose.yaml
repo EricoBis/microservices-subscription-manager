@@ -75,6 +75,20 @@ services:
     networks:
       - subscription-network
       - payment-network
+  valid-subscription-service:
+    build: valid-subscriptions
+    image: valid-subscriptions
+    depends_on:
+      - naming-server
+      - rabbitmq
+    environment:
+      - eureka.client.serviceUrl.defaultZone = http://naming-server:8761/eureka
+      - spring.rabbitmq.host=rabbitmq
+      - spring.rabbitmq.port=5672
+      - spring.rabbitmq.username=engsoft2
+      - spring.rabbitmq.password=engsoft2
+    networks:
+      - subscription-network
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmq

@@ -13,6 +13,7 @@ import com.engsoft2.registration_service.services.dto.SubscriptionDTO;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -94,6 +95,17 @@ public class SubscriptionService {
         subscription = subscriptionRepository.save(subscription);
 
         return new SubscriptionDTO(subscription.getSubscriptionId(), subscription.getClient().getClientId(), subscription.getApplication().getAppId(), beginSubscription.getTime(), subscription.getEndSubscription(), subscription.getStatus());
+    }
+
+    public SubscriptionDTO getSubscription(Long subscriptionId) {
+        Optional<Subscription> subscription = subscriptionRepository.findById(subscriptionId);
+
+        if (subscription.isEmpty())
+            throw new IllegalArgumentException("Invalid Subscription ID");
+
+        Subscription sub = subscription.get();
+
+        return new SubscriptionDTO(sub.getSubscriptionId(), sub.getClient().getClientId(), sub.getApplication().getAppId(), sub.getBeginSubscription(), sub.getEndSubscription(), sub.getStatus());
     }
 }
 
