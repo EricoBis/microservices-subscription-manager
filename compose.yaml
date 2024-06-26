@@ -26,7 +26,7 @@ services:
       - POSTGRES_USER=registration
       - POSTGRES_DB=registration
     networks:
-      - subscription-network
+      - registration-network
   registration-service:
     build: registration-service
     image: registration-service
@@ -41,10 +41,40 @@ services:
       - spring.rabbitmq.password=engsoft2
     networks:
       - subscription-network
+      - registration-network
     depends_on:
       - naming-server
       - registration-postgres
       - rabbitmq
+  payment-postgres:
+    image: postgres:16-alpine
+    ports:
+      - 5433:5432
+    environment:
+      - POSTGRES_PASSWORD=payment
+      - POSTGRES_USER=payment
+      - POSTGRES_DB=payment
+    networks:
+      - payment-network
+  payment-service:
+    build: payment-service
+    image: payment-service
+    ports:
+      - 9002:9002
+    environment:
+      - eureka.client.serviceUrl.defaultZone = http://naming-server:8761/eureka
+      - spring.datasource.url = jdbc:postgresql://payment-postgress:5434/payment
+      - spring.rabbitmq.host=rabbitmq
+      - spring.rabbitmq.port=5672
+      - spring.rabbitmq.username=engsoft2
+      - spring.rabbitmq.password=engsoft2
+    depends_on:
+      - naming-server
+      - payment-postgres
+      - rabbitmq
+    networks:
+      - subscription-network
+      - payment-network
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmq
@@ -62,3 +92,5 @@ services:
 
 networks:
   subscription-network:
+  payment-network:
+  registration-network:

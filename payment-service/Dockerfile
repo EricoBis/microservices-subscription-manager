@@ -1,7 +1,7 @@
 FROM gradle:jdk21-alpine AS build
 WORKDIR /app
 
-COPY .gradle .gradle
+# COPY .gradle .gradle
 COPY build.gradle .
 COPY settings.gradle .
 RUN gradle clean
