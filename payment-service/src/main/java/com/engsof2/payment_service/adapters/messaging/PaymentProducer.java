@@ -19,6 +19,6 @@ public class PaymentProducer {
 
     public void sendPaymentMessage(PaymentDTO payment) {
         rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_REGISTER, payment);
-        rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_VALIDATION, payment);
+        rabbitTemplate.convertAndSend(RabbitMQConfig.FANOUT_EXCHANGE, payment);
     }
 }

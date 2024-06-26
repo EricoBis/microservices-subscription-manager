@@ -1,21 +1,37 @@
 package com.engsoft2.valid_subscriptions.config;
 
-import org.springframework.amqp.core.FanoutExchange;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 @Configuration
 public class RabbitMQConfig {
 
-	public static final String FANOUT_NAME = "subscription.v1.payment-validate";
+	@Value("${queue-name}")
+	public final String QUEUENAME = System.getenv("queue-name");
+	public final String FANOUT_EXCHANGE = "subscription.v1.fanout-exchange";
 
 	@Bean
-	public FanoutExchange fanoutExchange(){
-		return new FanoutExchange(FANOUT_NAME);
+	public Queue queue() {
+		return new Queue(QUEUENAME, true, false, false);
+	}
+
+	@Bean
+	public FanoutExchange exchange(){
+		return new FanoutExchange(FANOUT_EXCHANGE, true, false);
+	}
+
+	@Bean
+	public Binding bindingValidation(FanoutExchange exchange) {
+		return BindingBuilder.bind(queue()).to(exchange);
 	}
 
 	@Bean
