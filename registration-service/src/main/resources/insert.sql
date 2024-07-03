@@ -14,3 +14,11 @@ INSERT INTO application (app_id, name, cost) VALUES (2, 'Streampulse', 9.50);
 INSERT INTO application (app_id, name, cost) VALUES (3, 'Vidpop', 19.99);
 INSERT INTO application (app_id, name, cost) VALUES (4, 'Rhythmix', 10.25);
 INSERT INTO application (app_id, name, cost) VALUES (5, 'Groovify', 13.90);
+
+INSERT INTO subscription (subscription_id, client_id, application_id, begin_subscription, end_subscription) VALUES (1, 1, 1, TO_DATE('03/07/2024', 'dd/mm/yyyy'), TO_DATE('03/08/2024', 'dd/mm/yyyy'));
+INSERT INTO subscription (subscription_id, client_id, application_id, begin_subscription, end_subscription) VALUES (2, 2, 1, TO_DATE('20/05/2024', 'dd/mm/yyyy'), TO_DATE('20/06/2024', 'dd/mm/yyyy'));
+INSERT INTO subscription (subscription_id, client_id, application_id, begin_subscription, end_subscription) VALUES (3, 3, 3, TO_DATE('01/07/2024', 'dd/mm/yyyy'), TO_DATE('01/08/2024', 'dd/mm/yyyy'));
+INSERT INTO subscription (subscription_id, client_id, application_id, begin_subscription, end_subscription) VALUES (4, 8, 4, TO_DATE('15/05/2024', 'dd/mm/yyyy'), TO_DATE('15/06/2024', 'dd/mm/yyyy'));
+INSERT INTO subscription (subscription_id, client_id, application_id, begin_subscription, end_subscription) VALUES (5, 6, 3, TO_DATE('27/04/2024', 'dd/mm/yyyy'), TO_DATE('27/05/2024', 'dd/mm/yyyy'));
+
+
